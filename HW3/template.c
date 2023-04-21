@@ -3,7 +3,7 @@
 void wave(float);
 
 int main(void) {
-  float delay = 10; // ms
+  float delay = 2.5; // ms
   
   NU32DIP_Startup(); // cache on, interrupts on, LED/button init, UART init
   while (1) {

@@ -1,30 +1,32 @@
 #include <stdio.h>
-#include "nu32dip.h"            // Include SPI library
-#include "i2c_master_noint.h"            // Include SPI library
+#include "nu32dip.h"            // Include standard UART library
+#include "ws2812b.h"            // Include LED library
 #include <math.h>           // Import math library
-
-void blink(int, int); // blink the LEDs function
 
 int main(void) {
   float heartbeat = 1000; // ms
   NU32DIP_Startup(); // cache on, interrupts on, LED/button init, UART init
-  i2c_init();
+  ws2812b_setup();
   
+  int numLEDs = 8;
+  wsColor white = HSBtoRGB(0,1,1); 
+
+  wsColor c[numLEDs]; 
   float t = _CP0_GET_COUNT();
   
+  for (int i=0; i<numLEDs; i++) {
+      c[i] = white;
+  }
+    
   while (1) {
-    if (readPin(ADDRESS, 0x09)==0) {
-        writePin(ADDRESS, 0x0A , 0b10000000); 
-    }
-    else {
-        writePin(ADDRESS, 0x0A , 0b00000000); 
-    }
-     
+      
+    ws2812b_setColor(&white, numLEDs);
+    
     if (_CP0_GET_COUNT() > t + 24000*heartbeat) {
         NU32DIP_GREEN = !NU32DIP_GREEN; // switches heartbeat lamp
-        NU32DIP_YELLOW = NU32DIP_GREEN;
+        NU32DIP_YELLOW = !NU32DIP_GREEN;
         t = _CP0_GET_COUNT();
-    }    
+    }  
       
   }
 }

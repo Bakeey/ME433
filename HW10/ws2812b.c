@@ -20,7 +20,7 @@ void ws2812b_setup() {
 }
 
 // build an array of high/low times from the color input array, then output the high/low bits
-void ws2812b_setColor(wsColor * c, int numLEDs) {
+void ws2812b_setColor(wsColor c[], int numLEDs) {
     int i = 0; int j = 0; // for loops
     int numBits = 2 * 3 * 8 * numLEDs; // the number of high/low bits to store, 2 per color bit
     volatile unsigned int delay_times[2*3*8 * 8]; // I only gave you 5 WS2812B, adjust this if you get more somewhere
@@ -35,7 +35,7 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
         // loop through each color bit, MSB first
         for (j = 7; j >= 0; j--) {
             // if the bit is a 1
-            if ( c->r & (1 << j) ) {
+            if ( c[i].r & (1 << j) ) {
                 // the high is longer
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;
@@ -54,7 +54,7 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
         // do it again for green
         for (j = 7; j >= 0; j--) {
             // if the bit is a 1
-            if ( c->g & (1 << j) ) {
+            if ( c[i].g & (1 << j) ) {
                 // the high is longer
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;
@@ -73,7 +73,7 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
 		// do it again for blue
         for (j = 7; j >= 0; j--) {
             // if the bit is a 1
-            if ( c->b & (1 << j) ) {
+            if ( c[i].b & (1 << j) ) {
                 // the high is longer
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;

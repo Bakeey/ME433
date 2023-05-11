@@ -37,7 +37,7 @@ for ti,sine in zip(t,signal):
 for frequency,magnitude in zip(freq,Y):
     print(str(frequency)+","+str(abs(magnitude)))	# Writing data in the opened file
 
-# # write to CSV
+# write to CSV """does not work for some reason"""
 # file=open("fft.csv","a")	# creation and opening of a CSV file in Write mode
 # # Type Program Logic Here
 # for frequency,magnitude in zip(freq,Y):
@@ -54,6 +54,4 @@ while 1:
         else:
             built_in_led.value = 1
     
-
-
     time.sleep(.05) # delay in seconds

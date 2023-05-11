@@ -74,9 +74,9 @@ def main():
             for row in reader:
                 # read the rows 1 one by one
                 frq.append(float(row[0])) # leftmost column
-                Y.append(float(row[1])) # second column
+                Y.append(abs(float(row[1]))) # second column
 
-        plot_fft(t,data,frq,Y, title=filename[:-4])
+        plot_fft(t,data,frq,Y, title='FFT of three combined sine waves with frequencies 100/200/300 Hz and sampling rate 1024 Hz')
 
 if __name__ == "__main__":
     exit(main())
